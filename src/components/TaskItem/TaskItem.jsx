@@ -1,5 +1,5 @@
 import React from 'react';
-// import './TaskItem.css';
+import './TaskItem.css';
 
 function TaskItem({ todo, onDelete, onEdit }) {
   const getPriorityStyle = (priority) => {
