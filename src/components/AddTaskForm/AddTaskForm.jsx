@@ -1,6 +1,7 @@
 // src/components/AddTaskForm.jsx
 import React, { useState } from 'react';
-import './AddTaskForm.css'; 
+import './AddTaskForm.css';
+
 function AddTaskForm({ onSubmit, onCancel }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -9,16 +10,10 @@ function AddTaskForm({ onSubmit, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const todo = {
-      title,
-      description,
-      dueDate,
-      priority,
-    };
-
+    const todo = { title, description, dueDate, priority };
     onSubmit(todo);
-    // 重設表單
+
+    // Reset form
     setTitle('');
     setDescription('');
     setDueDate('');
@@ -32,6 +27,7 @@ function AddTaskForm({ onSubmit, onCancel }) {
       <input
         type="text"
         placeholder="Title*"
+        className="add-task-input"
         value={title}
         required
         onChange={(e) => setTitle(e.target.value)}
@@ -39,25 +35,33 @@ function AddTaskForm({ onSubmit, onCancel }) {
 
       <textarea
         placeholder="Description"
+        className="add-task-input description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      <input
-        type="date"
-        value={dueDate}
-        required
-        onChange={(e) => setDueDate(e.target.value)}
-      />
+      <div className="date-priority-container">
+        <input
+          type="date"
+          className="add-task-input date"
+          value={dueDate}
+          required
+          onChange={(e) => setDueDate(e.target.value)}
+        />
 
-      <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-        <option value="1">Priority 1 (🔥 Highest)</option>
-        <option value="2">Priority 2</option>
-        <option value="3">Priority 3</option>
-        <option value="4">Priority 4 (💤 Lowest)</option>
-      </select>
+        <select
+          className="add-task-input priority"
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+        >
+          <option value="1">Priority 1 (🔥 Highest)</option>
+          <option value="2">Priority 2</option>
+          <option value="3">Priority 3</option>
+          <option value="4">Priority 4 (💤 Lowest)</option>
+        </select>
+      </div>
 
-      <div className="form-buttons">
+      <div className="btn-container">
         <button type="submit">Add Task</button>
         {onCancel && (
           <button type="button" onClick={onCancel}>Cancel</button>

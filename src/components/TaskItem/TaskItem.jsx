@@ -15,26 +15,23 @@ function TaskItem({ todo, onDelete, onEdit }) {
   const priority = getPriorityStyle(todo.priority);
 
   return (
-    <div className="task-item">
-      <div className="task-main">
-        <h3 className="task-title">{todo.title}</h3>
-        <p className="task-desc">{todo.description || 'No description'}</p>
-      </div>
-
-      <div className="task-meta">
-        <p className="task-date">Due: {todo.dueDate}</p>
+    <div className="todo-container">
+      <input type="checkbox" className="complete-todo" />
+      <h3 className="todo-title">{todo.title}</h3>
+      <p className="todo-desc">{todo.description || 'No description'}</p>
+      
+      <div className="todo-container-date-pri">
+        <p className="todo-date">Due: {todo.dueDate}</p>
         <span
-          className="task-priority"
+          className="todo-priority"
           style={{ backgroundColor: priority.backgroundColor }}
         >
           {priority.label}
         </span>
       </div>
 
-      <div className="task-actions">
-        <button onClick={() => onEdit(todo)} className="task-edit">✏️</button>
-        <button onClick={() => onDelete(todo)} className="task-delete">🗑️</button>
-      </div>
+      <button onClick={() => onEdit(todo)} className="edit-todo">✏️</button>
+      <button onClick={() => onDelete(todo)} className="delete-todo">🗑️</button>
     </div>
   );
 }

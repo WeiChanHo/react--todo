@@ -4,7 +4,16 @@ import './ProjectList.css';
 function ProjectList({ projects, current, onSelect, onAddProject }) {
   return (
     <div className="project-list">
-      <h2 className="project-list-title">My Projects</h2>
+      <div className="project-header">
+        <h2 className="project-list-title">My Projects</h2>
+        <button
+          className="add-project-header-btn"
+          onClick={onAddProject}
+        >
+        +
+        </button>
+      </div>
+      
       {projects.map((project, idx) => (
         <button
           key={idx}
@@ -13,13 +22,8 @@ function ProjectList({ projects, current, onSelect, onAddProject }) {
         >
           {project.name}
         </button>
+        
       ))}
-      <button
-        className="add-project-btn"
-        onClick={onAddProject}
-      >
-        + Add Project
-      </button>
     </div>
   );
 }

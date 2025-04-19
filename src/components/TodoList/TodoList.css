@@ -1,7 +1,34 @@
-.content {
+/* Main container for the todo list */
+.todo-list {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Empty state message when no tasks are present */
+  .todo-list-empty {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-style: italic;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    margin-top: 80px;
+  }
+  
+  /* Ensuring the content width is properly set */
+  .content {
     width: 60%;
-}
-.content input,
-.content .todo-title {
+    margin: 0 auto;
+  }
+  
+  /* Making sure input and todo-title display inline as specified */
+  .content input,
+  .content .todo-title {
     display: inline;
-}
+  }
+  
+  /* Ensuring proper spacing between task items */
+  .todo-list > div + div {
+    margin-top: 5px;
+  }

@@ -9,7 +9,7 @@ function Sidebar({
   onAddProject, 
   onAddTask 
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Default to open based on CSS
   const toggleSidebar = () => setIsOpen(open => !open);
 
   return (
@@ -33,21 +33,21 @@ function Sidebar({
           </div>
         )}
 
-        {/* 2. Render project list */}
-        <ProjectList
-          projects={projects}
-          current={current}
-          onSelect={onSelect}
-          onAddProject={onAddProject}
-        />
-
-        {/* 3. Add Task button */}
+        {/* 2. Add Task button */}
         <button
           className="add-task-sidebar-btn"
           onClick={onAddTask}
         >
           + Add Task
         </button>
+
+        {/* 3. Project list with integrated add button */}
+        <ProjectList
+          projects={projects}
+          current={current}
+          onSelect={onSelect}
+          onAddProject={onAddProject}
+        />
       </div>
     </>
   );

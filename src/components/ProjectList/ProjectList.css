@@ -1,35 +1,59 @@
-.delete-project {
-    width: 30px;
-    height: 30px;
-    background: no-repeat url('./delete.svg') center;
-    background-size: 25px 25px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    visibility: hidden;
-}
-.delete-project:hover {
-    background-color: red;
-}
-.project-btn {
-    position: relative;
-}
-.project-btn:hover >* {
-    visibility: visible;
-}
-.edit-project {
-    width: 30px;
-    height: 30px;
-    background: no-repeat url('./pencil.svg') center;
-    background-size: 25px 25px;
-    position: absolute;
-    right: 40px;
-    top: 0;
-    visibility: hidden;
-}
-.edit-project:nth-child(1) {
-    right: 0;
-}
-.edit-project:hover {
-    background-color: lightgreen;
-}
+.project-list {
+    margin-top: 20px;
+  }
+  
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    margin-bottom: 10px;
+  }
+  
+  .project-list-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .add-project-header-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    color: red;
+    border: none;
+    font-size: 25px;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-project-header-btn:hover {
+    background-color: #43a047;
+  }
+  
+  .project-btn {
+    display: block;
+    width: 90%;
+    text-align: left;
+    padding: 8px 8px 8px 32px;
+    margin-left: 12.5px;
+    background-color: transparent;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  
+  .project-btn:hover {
+    background-color: rgb(224, 223, 223);
+  }
+  
+  .project-btn.active {
+    background-color: #ddd;
+    font-weight: bold;
+  }
