@@ -1,80 +1,108 @@
+// src/App.jsx
 import { useEffect, useState } from 'react';
 import './index.css';
 
-// components
-import Sidebar from './components/Sidebar/Sidebar';
-import ProjectTitleBar from './components/ProjectTitleBar/ProjectTitleBar';
-import TodoList from './components/TodoList/TodoList';
-import AddTaskForm from './components/AddTaskForm/AddTaskForm';
+import Sidebar        from './components/Sidebar/Sidebar';
+import TodoList       from './components/TodoList/TodoList';
+import AddTaskForm    from './components/AddTaskForm/AddTaskForm';
 import AddProjectForm from './components/AddProjectForm/AddProjectForm';
 
-// logic layer
-import { projects as projectsLogic } from './logic/projectsLogic';
+// logic layer exports
+import {
+  projects as projectsLogic,
+  makeProject,
+  makeTodo,
+  addTodoToProject,
+  removeTodo,
+  updateTodo
+} from './logic/projectsLogic';
 
 function App() {
-  /* ---------------- State ---------------- */
-  const [projects, setProjects] = useState([]);
+  /* ──────────────── State ──────────────── */
+  const [projects, setProjects]             = useState([]);
   const [currentProject, setCurrentProject] = useState(null);
-  const [showAddTask, setShowAddTask] = useState(false);
+  const [showAddTask, setShowAddTask]       = useState(false);
   const [showAddProject, setShowAddProject] = useState(false);
+  const [editingTodo, setEditingTodo]       = useState(null);
 
-  /* --------------- Effects --------------- */
+  /* ─────────────── useEffect ───────────── */
   useEffect(() => {
-    projectsLogic.initializeLocalStorage(); // ensure there is at least one project
+    projectsLogic.initializeLocalStorage();
     projectsLogic.loadStorage();
     const loaded = projectsLogic.getProjects().projects;
     setProjects(loaded);
     setCurrentProject(loaded[0] ?? null);
   }, []);
 
-  /* --------------- Handlers -------------- */
-  const handleSelectProject = (project) => setCurrentProject(project);
-
-  const handleAddTask = (todo) => {
-    if (!currentProject) return;
-    projectsLogic.addTodoToProject(currentProject, todo);
+  /* ──────────── Helper: refresh ────────── */
+  const refresh = () => {
     setProjects([...projectsLogic.getProjects().projects]);
+    setCurrentProject(prev =>
+      projectsLogic.getProjects().projects.find(p => p.name === prev?.name) ??
+      projectsLogic.getProjects().projects[0] ??
+      null
+    );
+  };
+
+  /* ─────────────── Handlers ────────────── */
+  const handleSelectProject = p => setCurrentProject(p);
+
+  const handleAddTask = ({ title, description, dueDate, priority }) => {
+    if (!currentProject) return;
+
+    if (editingTodo) {
+      // Edit flow
+      const upd = updateTodo(editingTodo);
+      upd.changeTodoTitle(title);
+      upd.changeTodoDescription(description);
+      upd.changeTodoDueDate(dueDate);
+      upd.changeTodoPriority(priority);
+      setEditingTodo(null);
+    } else {
+      // New flow
+      const todo = makeTodo(title, description, dueDate, priority);
+      addTodoToProject(currentProject, todo);
+    }
+
+    projectsLogic.populateStorage();
+    refresh();
     setShowAddTask(false);
   };
 
-  const handleDeleteTask = (todo) => {
+  const handleDeleteTask = todo => {
     if (!currentProject) return;
-    projectsLogic.removeTodo(currentProject, todo);
-    setProjects([...projectsLogic.getProjects().projects]);
+    removeTodo(currentProject, todo);
+    projectsLogic.populateStorage();
+    refresh();
   };
 
-  const handleEditTask = (patchedTodo) => {
-    // placeholder for future edit‑todo flow
+  const handleEditTask = todo => {
+    setEditingTodo(todo);
+    setShowAddTask(true);
   };
 
   const handleAddProject = ({ name }) => {
-    const newProj = projectsLogic.makeProject(name);
+    const newProj = makeProject(name);
     projectsLogic.updateProjects(newProj);
-    setProjects([...projectsLogic.getProjects().projects]);
+    projectsLogic.populateStorage();
+    refresh();
+    setCurrentProject(newProj);
     setShowAddProject(false);
-    setCurrentProject(newProj); // auto‑switch to new project
   };
 
-  /* ---------------- View ----------------- */
+  /* ───────────────── View ───────────────── */
   return (
     <div className="app-container">
-      {/* Sidebar with nested project list */}
+      {/* Sidebar = nav + buttons */}
       <Sidebar
         projects={projects}
         current={currentProject}
         onSelect={handleSelectProject}
         onAddProject={() => setShowAddProject(true)}
+        onAddTask={() => setShowAddTask(true)}
       />
 
-      {/* Top bar showing current project + Add Task btn */}
-      {currentProject && (
-        <ProjectTitleBar
-          name={currentProject.name}
-          onAddTask={() => setShowAddTask(true)}
-        />
-      )}
-
-      {/* Todos for selected project */}
+      {/* Task list for selected project */}
       <main className="main-body">
         <TodoList
           todos={currentProject?.myTodos || []}
@@ -83,11 +111,15 @@ function App() {
         />
       </main>
 
-      {/* Dialogs / Modals */}
+      {/* Dialogs */}
       {showAddTask && (
         <AddTaskForm
+          initialData={editingTodo}
           onSubmit={handleAddTask}
-          onCancel={() => setShowAddTask(false)}
+          onCancel={() => {
+            setShowAddTask(false);
+            setEditingTodo(null);
+          }}
         />
       )}
 

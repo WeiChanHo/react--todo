@@ -79,3 +79,32 @@ svg {
     font-size: 1.2rem;
     font-weight: bold;
 }
+/* “+ Add Task” button */
+.add-task-sidebar-btn {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 8px 16px;
+    padding: 8px;
+    background-color: #4caf50;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .add-task-sidebar-btn:hover {
+    background-color: #43a047;
+  }
+  
+
+/* Show current project name at top of sidebar */
+.sidebar-current-project {
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+  }
+  .sidebar-current-project .project-name {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  
