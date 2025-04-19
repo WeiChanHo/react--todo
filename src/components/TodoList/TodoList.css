@@ -1,0 +1,7 @@
+.content {
+    width: 60%;
+}
+.content input,
+.content .todo-title {
+    display: inline;
+}

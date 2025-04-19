@@ -1,0 +1,35 @@
+.delete-project {
+    width: 30px;
+    height: 30px;
+    background: no-repeat url('./delete.svg') center;
+    background-size: 25px 25px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+.delete-project:hover {
+    background-color: red;
+}
+.project-btn {
+    position: relative;
+}
+.project-btn:hover >* {
+    visibility: visible;
+}
+.edit-project {
+    width: 30px;
+    height: 30px;
+    background: no-repeat url('./pencil.svg') center;
+    background-size: 25px 25px;
+    position: absolute;
+    right: 40px;
+    top: 0;
+    visibility: hidden;
+}
+.edit-project:nth-child(1) {
+    right: 0;
+}
+.edit-project:hover {
+    background-color: lightgreen;
+}
