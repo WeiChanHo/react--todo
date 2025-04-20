@@ -7,7 +7,9 @@ function Sidebar({
   current, 
   onSelect, 
   onAddProject, 
-  onAddTask 
+  onAddTask,
+  onEditProject,
+  onDeleteProject
 }) {
   const [isOpen, setIsOpen] = useState(true); // Default to open based on CSS
   const toggleSidebar = () => setIsOpen(open => !open);
@@ -47,6 +49,8 @@ function Sidebar({
           current={current}
           onSelect={onSelect}
           onAddProject={onAddProject}
+          onEditProject={onEditProject}
+          onDeleteProject={onDeleteProject}
         />
       </div>
     </>
