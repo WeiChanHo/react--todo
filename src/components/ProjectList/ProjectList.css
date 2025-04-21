@@ -57,6 +57,30 @@
     background-color: #ddd;
     font-weight: bold;
   }
-  .project-row       { position: relative; display: flex; align-items: center; }
-.edit-project,
-.delete-project    { margin-left: 6px; background:none; border:none; cursor:pointer; }
+  .project-row {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    /* TODO:the delete-button and edit-button in sidebar  */
+    padding: 2px 2px;
+    overflow:auto ;
+  }
+  
+  /* give the icon buttons real size */
+  .edit-project,
+  .delete-project {
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+    background: none;
+    border: none;
+    font-size: 15px;        /* show the 🗑️ / ✏️ emoji */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* optional hover color */
+  .edit-project:hover  { color: #1976d2; }
+  .delete-project:hover{ color: #d32f2f; }

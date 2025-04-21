@@ -20,7 +20,7 @@ function ProjectList({ projects, current, onSelect, onAddProject, onEditProject,
                         className={`project-btn ${project === current ? 'active' : ''}`}
                         onClick={() => onSelect(project)}
                     >
-                        {project.name}
+                        <span className="project-name-text">{project.name}</span>
                     </button>
 
                     <button
